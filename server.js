@@ -53,3 +53,7 @@ app.post('/api/chat', async (req, res) => {
     res.status(500).json({ reply: "⚠️ API error. Check console." });
   }
 });
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
