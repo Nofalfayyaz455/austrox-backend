@@ -1,28 +1,21 @@
+// server.js
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const dotenv = require('dotenv');
 const path = require('path');
-require('dotenv').config();
 
+dotenv.config();
 const app = express();
+const PORT = process.env.PORT || 3001;
 
-// ✅ CORS setup to allow your frontend on Vercel
-app.use(cors({
-  origin: 'https://austrox-gpt.vercel.app', // ✅ Replace with your actual deployed frontend
-  credentials: true
-}));
-
+app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 
-// ✅ Main AI chat route
+// ========== API Endpoint ==========
 app.post('/api/chat', async (req, res) => {
   const userMessage = req.body.message;
   const selectedModel = req.body.model || 'meta-llama/llama-3-70b-instruct';
-  const systemPrompt = req.body.system || "You are AustroX-GPT, a helpful assistant created by Nofal Fayyaz in Pakistan.";
-
-  console.log("User:", userMessage);
-  console.log("Model:", selectedModel);
 
   try {
     const response = await axios.post(
@@ -30,7 +23,7 @@ app.post('/api/chat', async (req, res) => {
       {
         model: selectedModel,
         messages: [
-          { role: 'system', content: systemPrompt },
+          { role: 'system', content: 'You are AustroX-GPT, an intelligent AI assistant.' },
           { role: 'user', content: userMessage }
         ]
       },
@@ -38,22 +31,29 @@ app.post('/api/chat', async (req, res) => {
         headers: {
           'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
           'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://austrox-gpt.vercel.app',
+          'HTTP-Referer': 'https://austrox.vercel.app', // or your frontend domain
           'X-Title': 'AustroX-GPT'
         }
       }
     );
 
-    const reply = response.data.choices[0].message.content;
-    console.log("AI:", reply);
-    res.json({ reply });
+    const aiReply = response.data.choices[0].message.content;
+    res.json({ reply: aiReply });
 
   } catch (err) {
     console.error("❌ OpenRouter Error:", err.response?.data || err.message);
-    res.status(500).json({ reply: "⚠️ API error. Check console." });
+    res.status(500).json({ reply: "⚠️ OpenRouter API error. Check logs." });
   }
 });
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+
+// ========== Health check ==========
+app.get('/', (req, res) => {
+  res.send('✅ AustroX Backend is running.');
 });
+
+app.listen(PORT, () => {
+  console.log(`✅ AustroX-GPT server running on port ${PORT}`);
+});
+
+  
+
