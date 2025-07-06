@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const dotenv = require('dotenv');
-const path = require('path');
 
 dotenv.config();
 const app = express();
@@ -17,9 +16,15 @@ app.use(express.json());
 
 // ========== API Endpoint ==========
 app.post('/api/chat', async (req, res) => {
-  console.log("🔐 OPENROUTER_API_KEY:", process.env.OPENROUTER_API_KEY); // Debug log
+  console.log("🔐 OPENROUTER_API_KEY:", process.env.OPENROUTER_API_KEY);
+  console.log("🛬 Incoming Body:", req.body); // 👈 See what's coming in
 
   const userMessage = req.body.message;
+
+  if (!userMessage) {
+    return res.status(400).json({ error: "❌ Missing 'message' in request body." });
+  }
+
   const selectedModel = req.body.model || 'meta-llama/llama-3-70b-instruct';
 
   try {
@@ -36,7 +41,7 @@ app.post('/api/chat', async (req, res) => {
         headers: {
           'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
           'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://austrox-gpt.vercel.app', // replace with your frontend URL if needed
+          'HTTP-Referer': 'https://austrox-gpt.vercel.app',
           'X-Title': 'AustroX-GPT'
         }
       }
@@ -51,7 +56,7 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-// ========== Health Check ==========
+// ========== Health check ==========
 app.get('/', (req, res) => {
   res.send('✅ AustroX Backend is running.');
 });
