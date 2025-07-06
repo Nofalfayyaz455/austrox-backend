@@ -15,7 +15,7 @@ app.use(express.json());
 // ========== API Endpoint ==========
 app.post('/api/chat', async (req, res) => {
   const userMessage = req.body.message;
-  const selectedModel = req.body.model || 'meta-llama/llama-3-70b-instruct';
+  const selectedModel = req.body.model || 'openai/gpt-3.5-turbo';
 
   try {
     const response = await axios.post(
@@ -31,7 +31,7 @@ app.post('/api/chat', async (req, res) => {
         headers: {
           'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
           'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://austrox.vercel.app', // or your frontend domain
+          'HTTP-Referer': 'https://austrox-gpt.vercel.app', // or your frontend domain
           'X-Title': 'AustroX-GPT'
         }
       }
