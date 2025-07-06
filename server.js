@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
@@ -13,15 +12,15 @@ if (!PORT) {
   throw new Error("❌ Railway PORT not found in environment!");
 }
 
-
 app.use(cors());
 app.use(express.json());
 
 // ========== API Endpoint ==========
 app.post('/api/chat', async (req, res) => {
+  console.log("🔐 OPENROUTER_API_KEY:", process.env.OPENROUTER_API_KEY); // Debug log
+
   const userMessage = req.body.message;
   const selectedModel = req.body.model || 'meta-llama/llama-3-70b-instruct';
-
 
   try {
     const response = await axios.post(
@@ -37,7 +36,7 @@ app.post('/api/chat', async (req, res) => {
         headers: {
           'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
           'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://austrox-gpt.vercel.app', // or your frontend domain
+          'HTTP-Referer': 'https://austrox-gpt.vercel.app', // replace with your frontend URL if needed
           'X-Title': 'AustroX-GPT'
         }
       }
@@ -52,7 +51,7 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-// ========== Health check ==========
+// ========== Health Check ==========
 app.get('/', (req, res) => {
   res.send('✅ AustroX Backend is running.');
 });
@@ -60,6 +59,3 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`✅ AustroX-GPT server running on port ${PORT}`);
 });
-
-  
-
