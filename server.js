@@ -34,7 +34,7 @@ app.post('/api/chat', async (req, res) => {
       },
       {
         headers: {
-          'Authorization': process.env.OPENROUTER_API_KEY,
+          'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
           'Content-Type': 'application/json',
           'HTTP-Referer': 'https://austrox-gpt.vercel.app', // replace with your frontend URL if needed
           'X-Title': 'AustroX-GPT'
