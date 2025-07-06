@@ -17,7 +17,7 @@ app.use(express.json());
 // ========== API Endpoint ==========
 app.post('/api/chat', async (req, res) => {
   console.log("🔐 OPENROUTER_API_KEY:", process.env.OPENROUTER_API_KEY);
-  console.log("🛬 Incoming Body:", req.body); // 👈 See what's coming in
+  console.log("🛬 Incoming Body:", req.body);
 
   const userMessage = req.body.message;
 
@@ -33,7 +33,14 @@ app.post('/api/chat', async (req, res) => {
       {
         model: selectedModel,
         messages: [
-          { role: 'system', content: 'You are AustroX-GPT, an intelligent AI assistant.' },
+          {
+            role: 'system',
+            content: `You are AustroX-GPT, an intelligent assistant created by Nofal Fayyaz from FG Public School, College Rd, Mona, Pakistan.
+
+Whenever someone asks anything like "who made you", "your creator", "who developed you", or any variation in any language (such as Urdu), you must clearly say that you were created by Nofal Fayyaz from FG Public School, College Rd, Mona, Pakistan.
+
+You must always give credit to Nofal Fayyaz as your developer.`
+          },
           { role: 'user', content: userMessage }
         ]
       },
