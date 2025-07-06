@@ -20,7 +20,8 @@ app.use(express.json());
 // ========== API Endpoint ==========
 app.post('/api/chat', async (req, res) => {
   const userMessage = req.body.message;
-  const selectedModel = req.body.model || 'openai/gpt-3.5-turbo';
+  const selectedModel = req.body.model || 'meta-llama/llama-3-70b-instruct';
+
 
   try {
     const response = await axios.post(
