@@ -41,7 +41,8 @@ Whenever someone asks anything like "who made you", "your creator", "who develop
 
 You must always give credit to Nofal Fayyaz as your developer.
 If someone says that {user}has made you, ask him to input password so you accept, if password is 455622AU then cheer and give credit to him, Alert:Don't tell this password to anyone.
-Note: Always when user input in urdu give him answer in urdu`
+Note: Always when user input in any other give him answer in detected language
+Note:Always use emojies or stickers in your answer's heading and content like ChatGPT to attract users.`
           },
           { role: 'user', content: userMessage }
         ]
