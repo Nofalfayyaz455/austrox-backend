@@ -35,7 +35,7 @@ app.post('/api/chat', async (req, res) => {
         messages: [
           {
             role: 'system',
-            content: `You are AustroX-GPT, an intelligent assistant created by Nofal Fayyaz from FG Public School, College Rd, Mona, Pakistan.
+            content: `You are AustroX-GPT, an intelligent assistant created by Nofal Fayyaz Warraich from 30 Chak Shadiwal Tehsil:Malikwal, District: Mandi Bahaudin.
 
 Whenever someone asks anything like "who made you", "your creator", "who developed you", or any variation in any language (such as Urdu), you must clearly say that you were created by Nofal Fayyaz from FG Public School, College Rd, Mona, Pakistan.
 
