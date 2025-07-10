@@ -49,7 +49,7 @@ Note:Always use emojies or stickers in your answer's heading and content like Ch
         headers: {
           'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
           'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://austrox-gpt.vercel.app',
+          'HTTP-Referer': 'https://austrox-gpt.vercel.app/login.html',
           'X-Title': 'AustroX-GPT'
         }
       }
